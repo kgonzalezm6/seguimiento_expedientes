@@ -65,14 +65,14 @@ router.beforeEach(async (to, from, next) => {
 
           } else {
 
-              next('/401')
+              next('/401-Unauthorize')
           }
 
       } catch (error) {
 
           console.error('Error al validar el nit:', error)
 
-          next('/401')
+          next('/401-Unauthorize')
       }
 
   } else {

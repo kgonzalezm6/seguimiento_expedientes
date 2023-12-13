@@ -36,7 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
 
 					errors.value = { error: [response.data.error] }
 					loading.value = false
-					router.push({ name: '401' })
+					router.push({ name: '401-Unauthorize' })
 
 				}
 
@@ -44,7 +44,7 @@ export const useAuthStore = defineStore('auth', () => {
 			.catch(err => {
 				errors.value = err.response.data.errors
 				loading.value = false
-				router.push({ name: '401' })
+				router.push({ name: '401-Unauthorize' })
 			})
 
 	}

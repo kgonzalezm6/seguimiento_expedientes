@@ -7,77 +7,101 @@ import axios from 'axios';
 
 export const useAuthStore = defineStore('auth', () => {
 
-  const user = ref([])
-  const roles = ref([])
-  const permissions = ref([])
-  const loading = ref(false)
-  const rolesApp = import.meta.env.VITE_MY_APPNAME
-  const errors = ref('')
+	const user = ref([])
+	const roles = ref([])
+	const permissions = ref([])
+	const loading = ref(false)
+	const rolesApp = import.meta.env.VITE_MY_APPNAME
+	const errors = ref('')
 
-  function login() {
-    loading.value = true
-    axios.post('login', {
-      app: rolesApp
-    })
-      .then(response => {
-        if (!response.data.error) {
+	function login() {
+		loading.value = true
+		axios.post('login', {}, {
+			headers: {
+				App: rolesApp
+			}
+		})
+			.then(response => {
+				if (!response.data.error) {
 
-          user.value = response.data
-          roles.value = response.data.roles.map(role => role.nombre)
-          permissions.value = response.data.roles.map(role => role.permissions.map(permission => permission.nombre)).flat(Infinity)
-          permissions.value = Array.from(new Set(permissions.value))
+					user.value = response.data
+					roles.value = response.data.roles.map(role => role.nombre)
+					permissions.value = response.data.roles.map(role => role.permissions.map(permission => permission.nombre)).flat(Infinity)
+					permissions.value = Array.from(new Set(permissions.value))
 
-          loading.value = false
-          localStorage.setItem('nit',user.value.nit)
-          // router.push({ name: ''})
-        } else {
-          
-          errors.value = {error:[response.data.error]}
-          loading.value = false
-          
-        }
+					loading.value = false
+					localStorage.setItem('nit', response.data.nit)
 
-      })
-      .catch(err => {
-        errors.value = err.response.data.errors
-        loading.value = false
-      })
+				} else {
 
-  }
+					errors.value = { error: [response.data.error] }
+					loading.value = false
+					router.push({ name: '401' })
 
-  function logout () {
-    localStorage.clear();
-    // router.push({name:'Login'})
-  }
+				}
 
-  function checkPermission(el) {
-    for (var key in this.permissions) {
-      if (this.permissions.hasOwnProperty(key)) {
-        var value = this.permissions[key];
+			})
+			.catch(err => {
+				errors.value = err.response.data.errors
+				loading.value = false
+				router.push({ name: '401' })
+			})
 
-        if (value === el) {
-          return true;
-        }
+	}
+	
+	async function validateNit(nit) {
+		try {
 
-        if (typeof value === 'object' && checkPermission(el)) {
-          return true;
-        }
-      }
-    }
+			const response = await axios.post('validate-nit',{ nit : nit })
 
-    return false;
-  }
+			if (response.data == 'Authorized') {
+				return true
+			} else {
+				return false
+			}
+
+		} catch (error) {
+			console.error(error)
+			return false
+		}
+
+	}
 
 
-  return {
-    user,
-    roles,
-    permissions,
-    errors,
-    loading,
+	async function logout() {
+		localStorage.clear();
+		return await axios.post('logout')
+	}
 
-    login,
-    logout,
-    checkPermission,
-  }
+	function checkPermission(el) {
+		for (var key in this.permissions) {
+			if (this.permissions.hasOwnProperty(key)) {
+				var value = this.permissions[key];
+
+				if (value === el) {
+					return true;
+				}
+
+				if (typeof value === 'object' && checkPermission(el)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+
+	return {
+		user,
+		roles,
+		permissions,
+		errors,
+		loading,
+
+		login,
+		logout,
+		validateNit,
+		checkPermission,
+	}
 })

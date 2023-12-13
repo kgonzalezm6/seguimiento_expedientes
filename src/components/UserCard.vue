@@ -30,7 +30,7 @@ import UserPhoto from './UserPhoto.vue'
 
             <UserPhoto :user="auth.user" class="h-14 w-14 cursor-pointer" />
             
-            <div class="font-bold text-blue-muni text-sm text-center">
+            <div class="font-bold text-blue-muni text-sm text-center hidden md:block">
                 <p>{{ auth.user.smallname }}</p>
                 <p>{{ auth.user?.roles ? auth.user?.roles[0]?.nombre : '' }}</p>
             </div>

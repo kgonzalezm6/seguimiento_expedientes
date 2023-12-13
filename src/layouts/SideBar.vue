@@ -4,8 +4,8 @@
     const store = useGlobalStore()
     const menus = [
         {title : 'Inicio', icon : 'fas fa-house-user', route : '../../' }, 
-        {title : 'Portal de certificaciones', icon : 'fas fa-medal', route : '#' }, 
-        {title : 'Configuración', icon : 'fas fa-gear', route : '/test' },
+        {title : 'Portal de certificaciones', icon : 'fas fa-medal', route : '/test' }, 
+        {title : 'Configuración', icon : 'fas fa-gear', route : '../../Ppersonal.php' },
     ]
 
 </script>
@@ -22,10 +22,10 @@
                 <ul class=" divide-y-2 divide-green-600 px-4 text-blue-muni">
                     <li></li>
                     <li v-for="(menu,index) in menus" :key="index"  class="py-7 cursor-pointer hover:scale-105 transition hover:text-blue-600">
-                        <RouterLink :to="menu.route" class="flex items-center gap-3">
+                        <a :href="menu.route" class="flex items-center gap-3">
                             <icon :icon="menu.icon" class="text-4xl " />
                             <span class=" font-bold text-sm" :hidden="!store.openSidebar" >{{ menu.title }}</span>
-                        </RouterLink>
+                        </a>
                     </li>
                     <li class="py-7 cursor-pointer hover:scale-105 transition hover:text-blue-600">
                         <a href="../../logout.php" class="flex items-center gap-3">

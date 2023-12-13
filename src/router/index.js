@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '../layouts/Default.vue'
 import Unauthorize from '../views/401-Unauthorize.vue'
 import NotFound from '../views/404-Not-Found.vue'
+import { useAuthStore } from '../stores/auth'
 
 
 
@@ -48,14 +49,37 @@ const router = createRouter({
 })
 
 
-router.beforeEach((to,from,next) => {
+router.beforeEach(async (to, from, next) => {
 
+  const auth = useAuthStore()
+  const isAuthenticated = localStorage.getItem('nit');
   const protectedRoutes = to.matched.some(route => route.meta.auth)
 
-  if(protectedRoutes && !localStorage.getItem('nit')){
-    next('/401-Unauthorize')
+  if (protectedRoutes) {
+
+      try {
+
+          if (await auth.validateNit(isAuthenticated) ) {
+
+              next()
+
+          } else {
+
+              next('/401')
+          }
+
+      } catch (error) {
+
+          console.error('Error al validar el nit:', error)
+
+          next('/401')
+      }
+
+  } else {
+
+      next()
   }
-  next()
+
 })
 
 export default router

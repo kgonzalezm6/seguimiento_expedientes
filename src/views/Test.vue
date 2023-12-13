@@ -1,7 +1,7 @@
 <script setup>
-   import axios from 'axios'
    import { computed,ref,onMounted } from 'vue'
    import { useGlobalStore } from '../stores/global'
+   import axios from 'axios'
    import UserPhoto from '../components/UserPhoto.vue'
    import Calendar from '../components/Calendar.vue'
 
@@ -103,7 +103,9 @@
    }
 
    onMounted(() => {
-      store.changeTitlePage('Test','fas fa-gear','text-red-200','bg-red-500 border-red-700')
+      store.titlePage.title = 'Test'
+      store.titlePage.icon = 'fas fa-cogs'
+      store.titlePage.color = "bg-red-500 border-red-700"
       fetchUsers()
       updateChart()
    })
@@ -172,8 +174,8 @@
    <br>
    <br>
    <card class="bg-white">
-      <div>
-         <h1 class="text-3xl font-bold">Botones</h1>
+      <h1 class="text-3xl font-bold">Botones</h1>
+      <div class="flex items-center gap-x-4">
          <btn icon="fas fa-home" @click="loadingBtn" text="Primary" class="btn-primary shadow-blue-800" :loading="loading" />
          <btn icon="fas fa-home" @click="loadingBtn" text="Success" class="btn-success shadow-green-800" :loading="loading" />
          <btn icon="fas fa-home" @click="loadingBtn" text="Danger" class="btn-danger shadow-red-800" :loading="loading" />

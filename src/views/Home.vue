@@ -1,13 +1,15 @@
 <script setup>
-    import { useAuthStore } from '../stores/auth'
-    import UserPhoto from '../components/UserPhoto.vue'
-    import axios from 'axios'
     import { onMounted, ref, computed } from 'vue'
+    import { useAuthStore } from '../stores/auth'
+    import { useGlobalStore } from '../stores/global'
+    import axios from 'axios'
+    import { rand } from '@vueuse/core'
+    import UserPhoto from '../components/UserPhoto.vue'
     import CardCollapse from '../components/CardCollapse.vue'
-    import TitlePage from '../components/TitlePage.vue'
-import { rand } from '@vueuse/core'
     
     const authStore = useAuthStore()
+    const global = useGlobalStore()
+
     const menus = ref([])
     const search = ref('')
 
@@ -46,17 +48,17 @@ import { rand } from '@vueuse/core'
 
 
     onMounted(()=>{
+        global.titlePage.title = 'Inicio'    
         fetchMenu()
     })
 
 </script>
 
 <template>
-    <TitlePage/>
     <div class="py-6">
         <header class="md:flex items-center justify-center lg:gap-20">
             <div class="flex justify-center">
-                <userPhoto :user="authStore.user" class=" w-52 h-52 lg:h-60 lg:w-60 " />
+                <UserPhoto :user="authStore.user" class=" w-52 h-52 lg:h-60 lg:w-60 " />
             </div>
             <div class="text-center text-blue-muni">
                 <h1 class="font-black md:text-3xl">{{ authStore.user.fullname }}</h1>

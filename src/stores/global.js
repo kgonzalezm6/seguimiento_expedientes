@@ -27,7 +27,7 @@ export const useGlobalStore = defineStore('global', () => {
         color : 'bg-blue-muni'
     })
 
-    function changeTitlePage (title = 'Home',icon = 'fas fa-home',textColor = 'text-white',color = 'bg-blue-muni') {
+    function changeTitlePage (title = 'Home',icon = 'fas fa-home',color = 'bg-blue-muni',textColor = 'text-white') {
         titlePage.value.title = title
         titlePage.value.icon = icon
         titlePage.value.textColor = textColor

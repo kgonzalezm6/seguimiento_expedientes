@@ -29,7 +29,7 @@
                         <slot></slot>
                     </section>
                     <hr>
-                    <footer class= "text-right p-4 flex justify-between">
+                    <footer class= "p-4 flex justify-between">
                         <slot name="footer"></slot>
                     </footer>
                 </div>

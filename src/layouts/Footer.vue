@@ -10,7 +10,7 @@
             <img src="../assets/img/logo.svg" class="w-48" alt="">
         </div>
         <div class=" text-center lg:text-left text-blue-muni z-10">
-            <h1 class="text-3xl font-bold  lg:tracking-[.25em]">¿ Necesitas ayuda ?</h1>
+            <h1 class="text-2xl lg:text-3xl font-bold  lg:tracking-[.25em]">¿ Necesitas ayuda ?</h1>
             <br>
             <div class="flex space-x-4 items-center justify-center lg:justify-start">
                 <icon icon="fa-solid fa-envelope" class=" lg:text-xl " />

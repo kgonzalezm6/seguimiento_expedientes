@@ -1,6 +1,6 @@
 <script setup>
 
-    import { ref, computed,watch,onMounted} from 'vue'
+    import { ref, computed,onMounted} from 'vue'
     import LoadingBar from './LoadingBar.vue'
 
     // -------------PROPERTIES--------------
@@ -19,9 +19,12 @@
         headers:null, 
         data:null,
         color:{
-            default:'bg-[#DBEAFE] text-blue-muni'
+            default:'bg-gray-100 text-gray-400'
         },
-        loading : false
+        loading : {
+            type : Boolean,
+            default : false
+        }
     })
     const data = computed(() => props.data )
 
@@ -109,14 +112,6 @@
         currentPage.value = 1
     }
 
-    // watch(data,()=>{
-    //     setTimeout(()=>{
-    //         if(data.value.length === 0 && loading.value === true ){
-    //             loading.value = false
-    //         }
-    //     },2000)
-    // })
-
     onMounted(()=>{
         setTimeout(()=>{
             if(data.value.length === 0 && props.loading === true ){
@@ -131,9 +126,10 @@
     <section class="px-6 mx-auto mb-8">
         
         <div class="mt-6 md:flex md:items-center md:justify-between">
-            <div  class="flex items-center border-2 px-2 py-1.5 rounded-lg shadow-lg">
+            <div  class="text-gray-400 bg-white flex items-center border-2 px-2 py-1.5 rounded-lg shadow-lg">
                 <span>Mostrar</span>
                 <select v-model="rowsPerPage" @change="resetPage" class="text-center bg-white font-bold w-full focus:outline-none ring-0">
+                    <option>5</option>
                     <option>10</option>
                     <option>25</option>
                     <option>50</option>
@@ -150,7 +146,7 @@
                     </svg>
                 </span>
 
-                <input v-model="search" type="search" placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white border-2 shadow-lg border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                <input v-model="search" type="search" placeholder="Buscar" class="block w-full py-1.5 pr-5 text-gray-700 bg-white border-2 shadow-lg border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
             </div>
         </div>
 
@@ -173,7 +169,7 @@
                                 <slot name="tbody" :items="paginatedData">
                                     <tr v-for="item in paginatedData" :key="item.id" class="hover:bg-gray-100 text-gray-800" >
                                         <td v-for="(head, index) in props.headers" class="px-4" :align="head.align"
-                                            :width="head.width" >
+                                            :width="head.width" :key="index">
                                             <slot :name="head.key" :item="item">
                                                 <p class="text-sm font-normal">{{ getObjectValue(item,head.key)}}</p>
                                             </slot>
@@ -224,7 +220,7 @@
                     </p>
                 </div>
                 <div v-show="filteredData.length >= 11 && displayedPages.length > 1">
-                    <nav class="isolate inline-flex -space-x-px rounded-md border-2 shadow-lg" aria-label="Pagination">
+                    <nav class="inline-flex -space-x-px rounded-md bg-white shadow-lg">
                         <a @click="(currentPage == 1) ? currentPage = 1 : currentPage--" 
                             class="cursor-pointer relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">
                             <span class="sr-only">Previous</span>
@@ -239,7 +235,7 @@
                         <span  class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">....</span>
                             <a :class=" page === currentPage ? ' scale-125 z-10 ' + props.color : '' " v-for="page in displayedPages"
                                 :key="page" @click="setCurrentPage(page)" 
-                                class="cursor-pointer select-none relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-500 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 hover:text-gray-500 focus:z-20 focus:outline-offset-0">
+                                class="cursor-pointer select-none relative inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-300 hover:bg-gray-200 hover:text-gray-500 focus:z-20 focus:outline-offset-0">
                                 {{ page }}
                             </a>
                         <span  class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">....</span>

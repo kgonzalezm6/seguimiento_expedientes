@@ -1,8 +1,37 @@
 <script setup>
+    import { ref, onMounted, watch } from 'vue'
+
     const props = defineProps(['user'])
+    const exist = ref(false)
+
+    function verificarImagen(){
+
+        var img = new Image()
+        img.src = 'https://udicat.muniguate.com/catastro/GestionServicios/'+props.user?.image
+
+        img.onload = function() {
+            exist.value = true
+        }
+        
+        img.onerror = function() {
+            exist.value = false
+        }
+    }
+
+
+    watch(()=> props.user?.image, () => {
+        verificarImagen()
+    })
+    
+    onMounted( () => {
+        verificarImagen()
+    })
+    
+
+
 </script>
 
 <template>
-    <img v-if="user.image" :src="'https://udicat.muniguate.com/catastro/GestionServicios/'+user.image" class="rounded-full border-2 border-gray-300 bg-lime-600 object-cover" >
-    <span v-else class="text-blue-400 text-lg rounded-full overflow-hidden border-2 border-gray-300 bg-cyan-50 flex justify-center items-center">{{ user.inicial }}</span>
+    <img v-if="exist" :src="'https://udicat.muniguate.com/catastro/GestionServicios/'+props.user?.image" class="rounded-full bg-lime-600 object-cover" >
+    <span v-else class="text-blue-muni font-bold text-2xl rounded-full overflow-hidden bg-lime-muni flex justify-center items-center">{{ user?.inicial }}</span>
 </template>

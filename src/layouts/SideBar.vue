@@ -2,13 +2,10 @@
     import { useGlobalStore } from '../stores/global'
     
     const store = useGlobalStore()
-
     const menus = [
         {title : 'Inicio', icon : 'fas fa-house-user', route : '../../' }, 
         {title : 'Portal de certificaciones', icon : 'fas fa-medal', route : '#' }, 
-        {title : 'Configuración', icon : 'fas fa-gear', route : '#' }, 
-        {title : 'Regresar', icon : 'fas fa-left-long', route : '#' }, 
-        {title : 'Cerrar sesión', icon : 'fas fa-right-from-bracket', route : '#' }
+        {title : 'Configuración', icon : 'fas fa-gear', route : '/test' },
     ]
 
 </script>
@@ -24,10 +21,16 @@
             <div>
                 <ul class=" divide-y-2 divide-green-600 px-4 text-blue-muni">
                     <li></li>
-                    <li v-for="(menu,index) in menus" :key="index"  class="flex items-center gap-3 py-7 cursor-pointer hover:scale-105 transition hover:text-blue-600">
-                        <a :href="menu.route">
+                    <li v-for="(menu,index) in menus" :key="index"  class="py-7 cursor-pointer hover:scale-105 transition hover:text-blue-600">
+                        <RouterLink :to="menu.route" class="flex items-center gap-3">
                             <icon :icon="menu.icon" class="text-4xl " />
                             <span class=" font-bold text-sm" :hidden="!store.openSidebar" >{{ menu.title }}</span>
+                        </RouterLink>
+                    </li>
+                    <li class="py-7 cursor-pointer hover:scale-105 transition hover:text-blue-600">
+                        <a href="../../logout.php" class="flex items-center gap-3">
+                            <icon icon="fas fa-right-from-bracket" class="text-4xl " />
+                            <span class=" font-bold text-sm" :hidden="!store.openSidebar" >Cerrar sesión</span>
                         </a>
                     </li>
                     <li class="py-7"></li>

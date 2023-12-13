@@ -1,15 +1,16 @@
 <script setup>
-import UserPhoto from './UserPhoto.vue';
 import { ref } from 'vue';
+import axios from 'axios'
 import { onClickOutside } from '@vueuse/core'
-import Modal from './Modal.vue';
-import axios from 'axios';
+import { useAuthStore } from '../stores/auth'
+import UserPhoto from './UserPhoto.vue'
 
-    const props = defineProps(['user'])
+    const auth = useAuthStore()
 
     const openModalHelp = ref(false);
     const open = ref(false);
     const target = ref(null)
+
 
     onClickOutside(target, (event) => open.value = false)
 
@@ -17,49 +18,41 @@ import axios from 'axios';
         axios.post(import.meta.env.VITE_MY_URL_BASE + 'logout');
     }
 
+    defineOptions({
+        inheritAttrs: false
+    })
     
 </script>
 
  <template>
-    
-    <Modal :open="openModalHelp" class="w-1/3">
-        <template #header>
-            Manual de usuario del módulo
-        </template>
-        <iframe src="../prescripciones/docs/help.pdf" class="w-full h-[42rem]"></iframe>
-        <template #footer>
-            <btn class="btn-danger shadow-red-800" text="Cerrar" @click="openModalHelp = false" />
-        </template>
-    </Modal>
-
-    <div @click="open = !open " ref="target">
+    <div @click="open = !open " ref="target" v-bind="$attrs" class="">
         <div class="flex items-center space-x-3 cursor-pointer">
 
-            <UserPhoto :user="user" class="h-12 w-12 cursor-pointer" />
+            <UserPhoto :user="auth.user" class="h-14 w-14 cursor-pointer" />
             
-            <div class="font-bold text-gray-200 text-sm text-center">
-                <p>{{ props.user.smallname }}</p>
-                <p>{{ props.user.roles ? props.user.roles[0].nombre : '' }}</p>
+            <div class="font-bold text-blue-muni text-sm text-center">
+                <p>{{ auth.user.smallname }}</p>
+                <p>{{ auth.user?.roles ? auth.user?.roles[0]?.nombre : '' }}</p>
             </div>
         </div>
 
         <Transition>
             <div v-show="open"
-                class="absolute w-72 px-5 py-3 text-gray-600 bg-white rounded-lg shadow-lg border-2 mt-5 right-4">
+                class="absolute w-72 px-5 py-3 bg-white rounded-lg shadow-lg border-2 mt-5 right-1 z-10 text-blue-muni">
 
-                <h1 class="text-gray-800 font-bold">Perfil de usuario</h1>
+                <h1 class="font-bold">Perfil de usuario</h1>
                 <div class="flex items-center space-x-2 py-2">
-                    <UserPhoto :user="user" class="h-12 w-12" />
-                    <div class="font-bold text-sm">
-                        <p>{{ props.user.smallname }}</p>
-                        <small>{{ props.user.emailmuni ?? '' }}</small>
+                    <UserPhoto :user="auth.user" class="h-12 w-12" />
+                    <div class="font-bold text-sm ">
+                        <p>{{ auth.user.smallname }}</p>
+                        <small>{{ auth.user.emailmuni ?? '' }}</small>
                     </div>
                 </div>
                 
                 <hr class="py-2">
                 <ul class="space-y-3">
                     <li class="font-medium">
-                        <a href="#" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-blue-700">
+                        <a href="../../Ppersonal.php" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-blue-700">
                             <div class="mr-3">
                                 <i class="fas fa-address-card"></i>
                             </div>
@@ -80,7 +73,7 @@ import axios from 'axios';
                             <div class="mr-3 text-red-600">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                             </div>
-                            <a href="../../login.php" @click="logout" type="submit">
+                            <a href="../../logout.php">
                                 Cerrar sesión
                             </a>
                         </div>
@@ -90,6 +83,15 @@ import axios from 'axios';
         </Transition>
 
     </div>
+    <modal :open="openModalHelp" class="w-1/3">
+        <template #header>
+            Manual de usuario del módulo
+        </template>
+        <iframe src="../prescripciones/docs/help.pdf" class="w-full h-[42rem]"></iframe>
+        <template #footer>
+            <btn class="btn-danger shadow-red-800" text="Cerrar" @click="openModalHelp = false" />
+        </template>
+    </modal>
  </template>
 
 <style scoped>

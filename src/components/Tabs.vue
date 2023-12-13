@@ -1,22 +1,28 @@
 <script setup>
+    import { useAuthStore } from '../stores/auth'
+    import { ref, shallowRef } from 'vue'
+    import Home from '../views/Home.vue'
+
+
+    
+    const currentTab = shallowRef(Home)
+    const active = ref('home')
+    const auth = useAuthStore()
     const props = defineProps(['tabs'])
+
+    
+
 </script>
 
 <template>
-    
-    <nav class="w-full border-b-2 border-lime-500">
-        <ul class="flex justify-center items-center space-x-6 text-xl font-bold text-lime-600">
-            <li v-for="tab in tabs">
-                <RouterLink 
-                    class="block cursor-pointer hover:border-b-white rounded-t-lg border-2 border-lime-500  px-3 py-2 -m-0.5" 
-                    active-class="border-b-white bg-lime-50" 
-                    :to="{ 'name': tab }">
-                    {{ tab }}
-                </RouterLink>
-            </li>
-        </ul>
+    <nav class="bg-blue-500 rounded-bl-full rounded-tr-full py-5 text-gray-300 font-semibold">
+        <div class="flex justify-center items-center space-x-10">
+            <div v-for="(tab,index) in tabs" :key="index">
+                <button v-if="auth.checkPermission(tab.title)" @click="currentTab = tab.component, active = tab.title" class="hover:text-white hover:font-bold hover:border-b cursor-pointer transition-all" :class="{'font-bold text-white border-b' : active == tab.title}">
+                    {{ tab.title }}
+                </button>
+            </div>
+        </div>
     </nav>
-    <div >
-        <RouterView />
-    </div>
+    <component :is="currentTab" ></component>
 </template>

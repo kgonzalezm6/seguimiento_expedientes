@@ -27,7 +27,7 @@ import Input from './components/Input.vue'
 import Card from './components/Card.vue'
 import ValidateErrors from './components/ValidateErrors.vue'
 import Logo from './components/Logo.vue'
-
+import tab from './components/Tabs.vue'
 import axios from 'axios'
 
 library.add(fas)
@@ -52,7 +52,7 @@ app.component('icon', FontAwesomeIcon)
 .component('validate-errors', ValidateErrors)
 .component('datepicker', VueDatePicker)
 .component('logo', Logo)
-
+.component('tab', tab)
 app.mount('#app')
 
 

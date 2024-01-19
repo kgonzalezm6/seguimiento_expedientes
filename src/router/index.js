@@ -3,8 +3,8 @@ import Layout from '../layouts/Default.vue'
 import Unauthorize from '../views/401-Unauthorize.vue'
 import NotFound from '../views/404-Not-Found.vue'
 import { useAuthStore } from '../stores/auth'
-
-
+import Expedientes from '../views/expedientes.vue'
+import Profile from '../views/Profile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_MY_BASE),
@@ -19,13 +19,13 @@ const router = createRouter({
       children : [
         {
           path: '',
-          name: 'Home',
-          component: () => import('../views/Home.vue')
+          name: 'Expedientes',
+          component: Expedientes
         },
         {
-          path: 'test',
-          name: 'Test',
-          component: () => import('../views/Test.vue')
+          path: 'profile',
+          name: 'Profile',
+          component: Profile
         }
         
       ]

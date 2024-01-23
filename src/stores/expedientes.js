@@ -8,8 +8,17 @@ export const useexpedientesStore = defineStore('expedientes', {
         carga_sin_asignar:false,
         datos_sin_asignar:[],
         errors:[],
-        headers_sin_asignar:[{
-        }]
+        open_asignar:false,
+        one_expediente:[],
+        headers_sin_asignar:[ 
+            { title: 'no. expediente', key: 'id', sort: true },
+            { title: 'no. documento', key: 'num_wf_documento', sort: true },
+            { title: 'año', key: 'num_wf_anio', sort: true },
+            { title: 'tipo de expediente', key: 'tipo', sort: true },
+            { title: 'fecha ingreso', key: 'fechaingreso', sort: true },
+            { title: 'fecha traslado', key: 'fechatraslado', sort: true },
+            { title: 'acciones', key: 'actions', sort: true },
+        ],
     }),
     actions: {
         async getSinAsignar() {
@@ -30,6 +39,12 @@ export const useexpedientesStore = defineStore('expedientes', {
                 this.carga_sin_asignar = false
             })
           },
+        action(item,action){
+            this.one_expediente = item;
+            if(action === 1){
+                this.open_asignar = true;
+            }
+        }
     },
 });
 

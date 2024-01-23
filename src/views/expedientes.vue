@@ -28,8 +28,8 @@ const globalStore = useGlobalStore();
 globalStore.changeTitlePage('Expedientes', 'folder-open', 'bg-green-500');
 
 const tabs = [
-    { title: 'POR ASIGNAR', component: sinAsignar },
-    { title: 'ASIGNADOS', component: asignados },
-    { title: 'FINALIZADOS', component: finalizados }
+    { title: 'Por asignar', component: sinAsignar },
+    { title: 'Asignados', component: asignados },
+    { title: 'Finalizados', component: finalizados }
 ];
 </script>

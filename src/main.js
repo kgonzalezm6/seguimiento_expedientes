@@ -28,8 +28,9 @@ import Card from './components/Card.vue'
 import ValidateErrors from './components/ValidateErrors.vue'
 import Logo from './components/Logo.vue'
 import tab from './components/Tabs.vue'
+import vSelect from 'vue-select'
 import axios from 'axios'
-
+import 'vue-select/dist/vue-select.css';
 library.add(fas)
 library.add(fab)
 library.add(far)
@@ -53,6 +54,7 @@ app.component('icon', FontAwesomeIcon)
 .component('datepicker', VueDatePicker)
 .component('logo', Logo)
 .component('tab', tab)
+.component('v-select', vSelect)
 app.mount('#app')
 
 

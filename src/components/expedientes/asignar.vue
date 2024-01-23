@@ -6,6 +6,9 @@ const globalStore = useGlobalStore();
 const expedienteStore = useexpedientesStore();
 </script>
 
+
+
+
 <template>
     <div>
         <modal :open="expedienteStore.open_asignar" title="Asignar expediente" icon="user-check" @close="expedienteStore.open_asignar= !expedienteStore.open_asignar">

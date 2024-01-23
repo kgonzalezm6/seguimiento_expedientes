@@ -1,5 +1,6 @@
 <script setup>
     import mapa from '../components/Mapa.vue'
+    let year = new Date
 </script>
 <template>
     <div class="relative w-full py-4 grid lg:grid-cols-3 gap-7 bg-lime-muni border-t-2 border-lime-500 overflow-hidden ">
@@ -31,7 +32,7 @@
             </div>
         </div>
         <div class="flex items-end text-blue-muni z-10">
-            <p class=" font-medium text-center ">© 2023 Dirección de Catastro y Administración del IUSI</p>
+            <p class=" font-medium text-center ">© {{ year.getFullYear() }} Dirección de Catastro y Administración del IUSI</p>
         </div>
     </div>
 </template>

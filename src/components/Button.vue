@@ -5,12 +5,13 @@
         icon : '',
         loading : {
             default : false
-        }
+        },
+        option : ''
     })
 </script>
 
 <template>
-    <button class="btn "  :disabled="props.loading">
+    <button v-if="props.hasOwnProperty('option') && props.option == 'modern'">
         <div class="flex items-center space-x-2">
             <icon v-if="props.icon" :icon="icon" class="text-base"/>
             <small>
@@ -19,4 +20,14 @@
             <spiner v-if="props.loading" class="border-b-gray-700 h-4 " />
         </div>
     </button>
+    <button v-else class="btn "  :disabled="props.loading">
+        <div class="flex items-center space-x-2">
+            <icon v-if="props.icon" :icon="icon" class="text-base"/>
+            <small>
+                {{ text }}
+            </small>
+            <spiner v-if="props.loading" class="border-b-gray-700 h-4 " />
+        </div>
+    </button>
+    
 </template>

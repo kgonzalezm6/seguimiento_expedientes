@@ -186,6 +186,11 @@
       </div>
       <br>
       <br>
+      <div class="flex items-center gap-x-4">
+        
+      </div>
+      <br>
+      <br>
       <br>
       <div>
          <h1 class="text-3xl font-bold">Alertas Toast</h1>

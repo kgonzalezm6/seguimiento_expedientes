@@ -16,11 +16,7 @@ export const useAuthStore = defineStore('auth', () => {
 
 	function login() {
 		loading.value = true
-		axios.post('login', {}, {
-			headers: {
-				App: rolesApp
-			}
-		})
+		axios.post('login')
 			.then(response => {
 				if (!response.data.error) {
 

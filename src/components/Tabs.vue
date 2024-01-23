@@ -1,14 +1,13 @@
 <script setup>
     import { useAuthStore } from '../stores/auth'
     import { ref, shallowRef } from 'vue'
-    import Home from '../views/Home.vue'
 
 
     
-    const currentTab = shallowRef(Home)
-    const active = ref('home')
-    const auth = useAuthStore()
     const props = defineProps(['tabs'])
+    const currentTab = shallowRef(props.tabs[0].component)
+    const active = ref(props.tabs[0].title)
+    const auth = useAuthStore()
 
     
 

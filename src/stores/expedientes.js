@@ -19,6 +19,7 @@ export const useexpedientesStore = defineStore('expedientes', {
             { title: 'fecha traslado', key: 'fechatraslado', sort: true },
             { title: 'acciones', key: 'actions', sort: true },
         ],
+        users:[]
     }),
     actions: {
         async getSinAsignar() {
@@ -44,7 +45,25 @@ export const useexpedientesStore = defineStore('expedientes', {
             if(action === 1){
                 this.open_asignar = true;
             }
-        }
+        },
+        async getUsers() {
+            this.carga_sin_asignar = true;
+            const globalstore = useGlobalStore();
+            const response = await axios.get('users/9')
+            .then(response => {
+                if(!response.data.error){
+                    this.datos_sin_asignar = response.data;
+                }else{
+                    this.errors = { error: [response.data.error] }
+                }
+            })
+            .catch(err => {
+                this.errors = err.response?.data?.errors
+            })
+            .finally(()=>{
+                this.carga_sin_asignar = false
+            })
+          },
     },
 });
 

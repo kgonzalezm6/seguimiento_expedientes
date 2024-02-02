@@ -30,7 +30,7 @@ const closeComponent = () => {
                         <icon v-if="props.icon" :icon="props.icon" class="text-orange-500 text-2xl" />
                         <span class="text-2xl text-blue-muni font-semibold tracking-tight">{{ props.title }}</span>
                         <div class="ml-auto -mt-5">
-                            <icon icon="x" @click="closeComponent" class="text-red-500 font-extrabold text-2xl" />
+                            <icon icon="x" @click="closeComponent" class="text-red-500 font-extrabold text-2xl p-2 hover:scale-150" />
                         </div>
                     </header>
                     <hr>

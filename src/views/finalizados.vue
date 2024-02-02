@@ -1,12 +1,30 @@
 <template>
     <div>
-        <h1>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi, neque, laudantium earum vel molestias dolor libero tempora ipsa fuga officia laborum! Cupiditate illum numquam porro nesciunt ex expedita sequi nostrum.</h1>
+      <datatable :data="expedienteStore.datos_finalizados" :headers="expedienteStore.headers_finalizados">
+            <template #actions="{ item }">
+                <div class="flex justify-center">
+                    <tooltip message="Aceptar tarea" v-if="item.status_tarea == 1">
+                        <icon icon="check" class="hover:scale-110 cursor-pointer mt-4 text-yellow-500 text-2xl"
+                            @click="expedienteStore.action(item, 3)" />
+                    </tooltip>
+                    <tooltip message="Finalizar tarea" v-if="item.status_tarea == 2">
+                        <icon icon="clipboard-check" class="hover:scale-110 cursor-pointer mt-4 text-teal-500 text-2xl"
+                            @click="expedienteStore.action(item, 2)" />
+                    </tooltip>
+                </div>
+            </template>
+        </datatable>
     </div>
 </template>
 <script setup>
+    import { onBeforeMount } from 'vue';
     import { useGlobalStore } from '../stores/global';
-
+    import { useexpedientesStore } from '../stores/expedientes';
+    const expedienteStore = useexpedientesStore();
     const globalStore = useGlobalStore();
 
     globalStore.changeTitlePage('Expedientes','folder-open','bg-green-500');
+    onBeforeMount(() => {
+    expedienteStore.getFinalizados();
+});
 </script>

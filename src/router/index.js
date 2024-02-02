@@ -5,6 +5,7 @@ import NotFound from '../views/404-Not-Found.vue'
 import { useAuthStore } from '../stores/auth'
 import Expedientes from '../views/expedientes.vue'
 import Profile from '../views/Profile.vue'
+import Gallery from '../views/Gallery.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_MY_BASE),
@@ -26,6 +27,11 @@ const router = createRouter({
           path: 'profile',
           name: 'Profile',
           component: Profile
+        },
+        {
+          path: 'gallery',
+          name: 'Gallery',
+          component: Gallery
         }
         
       ]

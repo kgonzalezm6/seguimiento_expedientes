@@ -12,7 +12,7 @@
                             @click="expedienteStore.action(item, 2)" />
                     </tooltip>
                 </div>
-                hola
+                
             </template>
         </datatable>
     </div>

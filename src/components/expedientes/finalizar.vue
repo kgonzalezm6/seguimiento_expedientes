@@ -10,11 +10,11 @@ onBeforeMount(() => {
 </script>
 <template>
     <div>
-        <modal :open="expedienteStore.open_finalizar" title="Finalizar expediente"
+        <modal :open="expedienteStore.open_finalizar" title="Finalizar"
             icon="clipboard-check" @close="expedienteStore.open_finalizar = !expedienteStore.open_finalizar" class="w-5/6">
                     <div class="flex items-center">
                         <icon icon="warning" class="text-9xl text-red-500"/>
-                        <span class="text-3xl ml-6 font-semibold">¿Esta seguro de finalizar el expediente # {{expedienteStore.one_expediente.id}} ?</span>
+                        <span class="text-3xl ml-6 font-semibold">¿Esta seguro de finalizar el expediente # {{expedienteStore.isWorkFlow ? expedienteStore.one_expediente.id : expedienteStore.one_expediente.num_iusicaso}} ?</span>
                     </div>
                     <validate-errors :errors="expedienteStore.errors" v-if="expedienteStore.errors != 0" />
             <template #footer>

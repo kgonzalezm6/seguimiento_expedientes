@@ -1,29 +1,39 @@
 <template>
     <div>
-        <datatable :data="expedienteStore.datos_sin_asignar" :headers="expedienteStore.headers_sin_asignar">
+        <datatable :data="store.datos_sin_asignar" :headers="store.headers_sin_asignar" :loading="store.carga_sin_asignar">
             <template #actions="{ item }">
                 <div class="flex justify-center">
+                    <tooltip message="Detalle expediente">
+                        <icon icon="eye" class="hover:scale-110 cursor-pointer mt-4 text-sky-300 text-2xl"
+                            @click="store.action(item, 4)" />
+                    </tooltip>
                     <tooltip message="Asignar expediente">
                         <icon icon="user-check" class="hover:scale-110 cursor-pointer mt-4 text-orange-400 text-2xl"
-                            @click="expedienteStore.action(item, 1)" />
+                            @click="store.action(item, 1)" />
                     </tooltip>
                 </div>
 
             </template>
         </datatable>
+        
         <asignar/>
+        <detalle />
     </div>
 </template>
 <script setup>
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, toRef, watch } from 'vue';
 import { useGlobalStore } from '../stores/global';
 import { useexpedientesStore } from '../stores/expedientes';
 import asignar from '../components/expedientes/asignar.vue';
+import detalle from '../components/expedientes/detalle.vue';
 const globalStore = useGlobalStore();
-const expedienteStore = useexpedientesStore();
+const store = useexpedientesStore();
 globalStore.changeTitlePage('Expedientes', 'folder-open', 'bg-green-500');
 onBeforeMount(() => {
-    expedienteStore.getSinAsignar();
+    store.getSinAsignar();
 });
-
+const isWorkFlowRef = toRef(store,'isWorkFlow')
+watch(isWorkFlowRef,(newVal) => {
+    store.getSinAsignar();
+});
 </script>

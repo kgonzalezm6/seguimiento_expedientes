@@ -17,7 +17,7 @@
       <label
         class="relative block aspect-[2/0.75] w-14 rounded-full bg-blue-500 shadow-2xl shadow-blue-300 transition-all duration-300 hover:bg-blue-600 focus:bg-blue-700 ">
         <!-- Cambia el color a azul y elimina el gradiente -->
-        <input class="peer/input hidden" type="checkbox" v-model="expedienteStore.isWorkFlow">
+        <input class="peer/input hidden" type="checkbox" v-model="store.isWorkFlow">
         <div
           class="absolute right-[3%] top-1/2 aspect-square h-[70%] -translate-y-1/2 rotate-180 rounded-full bg-white transition-all duration-500 peer-checked/input:right-[63%] peer-checked/input:-rotate-6">
         </div> <!-- Ajusta las posiciones y elimina el gradiente -->
@@ -29,6 +29,7 @@
             <tab :tabs="tabs" />
         </div>
     </div>
+
 </template>
 <script setup>
 import { ref, onBeforeMount, watch, toRef } from 'vue';
@@ -37,21 +38,16 @@ import { useexpedientesStore } from '../stores/expedientes';
 import sinAsignar from './sin-asignar.vue';
 import asignados from './asignados.vue';
 import finalizados from './finalizados.vue'
+
 const globalStore = useGlobalStore();
-const expedienteStore = useexpedientesStore();
+const store = useexpedientesStore();
 globalStore.changeTitlePage('Expedientes', 'folder-open', 'bg-green-500');
-const isWorkFlowRef = toRef(expedienteStore,'isWorkFlow')
+
 const tabs = [
     
     { title: 'Por asignar', component: sinAsignar },
     { title: 'Asignados', component: asignados },
     { title: 'Finalizados', component: finalizados }
 ];
-watch(isWorkFlowRef, (newvalue) => {
-//   if (newvalue) {
-//     expedienteStore.ge
-//   } else {
-//     convenioStore.getConvenio();
-//   }
-});
+
 </script>

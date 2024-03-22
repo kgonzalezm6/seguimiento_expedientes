@@ -1,6 +1,6 @@
 <template>
     <div>
-      <datatable :data="expedienteStore.datos_finalizados" :headers="expedienteStore.headers_finalizados">
+      <datatable :data="expedienteStore.datos_finalizados" :headers="expedienteStore.headers_finalizados" :loading="expedienteStore.carga_finalizados">
             <template #actions="{ item }">
                 <div class="flex justify-center">
                     <tooltip message="Aceptar tarea" v-if="item.status_tarea == 1">

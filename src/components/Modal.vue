@@ -16,7 +16,7 @@ defineOptions({
     inheritAttrs: false
 });
 const closeComponent = () => {
-    emit('close');
+    emit('close'); 
 };
 </script>
 

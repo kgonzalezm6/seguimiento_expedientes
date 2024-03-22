@@ -10,7 +10,7 @@ onBeforeMount(() => {
 </script>
 <template>
     <div>
-        <modal :open="expedienteStore.open_asignar" :title="'Asignar expediente # ' + expedienteStore.one_expediente.id"
+        <modal :open="expedienteStore.open_asignar" :title="expedienteStore.isWorkFlow ? 'Asignar expediente # '+ expedienteStore.one_expediente.id : 'Asignar expediente # ' + expedienteStore.one_expediente.num_iusicaso"
             icon="user-check" @close="expedienteStore.open_asignar = !expedienteStore.open_asignar" class="w-5/6">
                     <v-select class="focus-within:border-blue-400" 
                     :options="expedienteStore.users" label="fullname" :reduce="user => user.usuario"
@@ -33,6 +33,7 @@ onBeforeMount(() => {
                     </slot>
                     </v-select>
                     <validate-errors :errors="expedienteStore.errors" v-if="expedienteStore.errors != 0"/>
+                    
             <template #footer>
                 <div class="flex ml-auto">
                     <btn text="Cerrar" class="bg-red-500 text-white" icon="x" @click="expedienteStore.open_asignar = false"

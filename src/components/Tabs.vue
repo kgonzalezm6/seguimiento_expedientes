@@ -1,6 +1,6 @@
 <script setup>
     import { useAuthStore } from '../stores/auth'
-    import { ref, shallowRef } from 'vue'
+    import { ref, shallowRef, markRaw } from 'vue'
 
 
     
@@ -10,7 +10,7 @@
     
     props.tabs.map(tab => {
         if(auth.checkPermission(tab.title)){
-            arrayTabs.value.push(tab)
+            arrayTabs.value.push(markRaw(tab))
         }
     })
     

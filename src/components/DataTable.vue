@@ -19,7 +19,7 @@
         headers:null, 
         data:null,
         color:{
-            default:'bg-gray-100 text-gray-400'
+            default:'bg-lime-muni text-blue-muni'
         },
         loading : {
             type : Boolean,

@@ -14,7 +14,7 @@ onBeforeMount(() => {
             icon="clipboard-check" @close="expedienteStore.open_controlcalidad = !expedienteStore.open_controlcalidad" class="w-5/6">
                     <div class="flex items-center">
                         <icon icon="bell" class="text-9xl text-red-500"/>
-                        <span class="text-3xl ml-6 font-semibold">¿Esta seguro de pasar el expediente # {{expedienteStore.isWorkFlow ? expedienteStore.one_expediente.id : expedienteStore.one_expediente.num_iusicaso}} a control de calidad ?</span>
+                        <span class="text-3xl ml-6 font-semibold">¿Esta seguro de pasar el expediente # {{expedienteStore.isWorkFlow ? expedienteStore.one_expediente.num_expediente : expedienteStore.one_expediente.num_iusicaso}} a control de calidad ?</span>
                     </div>
                     <validate-errors :errors="expedienteStore.errors" v-if="expedienteStore.errors != 0" />
             <template #footer>

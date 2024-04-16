@@ -1,11 +1,11 @@
 <script setup>
-import { onBeforeMount } from 'vue';
+import { onMounted } from 'vue';
 import { useGlobalStore } from '../../stores/global';
 import { useexpedientesStore } from '../../stores/expedientes';
 const globalStore = useGlobalStore();
 const expedienteStore = useexpedientesStore();
-onBeforeMount(() => {
-    expedienteStore.getUsers();
+onMounted(() => {    
+        expedienteStore.getUsers();
 });
 </script>
 <template>

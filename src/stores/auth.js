@@ -13,6 +13,7 @@ export const useAuthStore = defineStore('auth', () => {
 	const loading = ref(false)
 	const rolesApp = import.meta.env.VITE_MY_APPNAME
 	const errors = ref('')
+	const tabsCargadas = ref(false);
 
 	function login() {
 		loading.value = true
@@ -94,6 +95,7 @@ export const useAuthStore = defineStore('auth', () => {
 		permissions,
 		errors,
 		loading,
+		tabsCargadas,
 
 		login,
 		logout,

@@ -11,5 +11,5 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  // base : '/GestionServicios/apps/{nombre de tu app separado por guiones medios}'
+  base : '/GestionServicios/apps/seguimiento-expedientes'
 })

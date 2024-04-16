@@ -15,18 +15,19 @@ export const useexpedientesStore = defineStore('expedientes', () => {
         let open_asignar = ref(false);
         let open_controlcalidad = ref(false);
         let open_finalizar = ref(false);
+        let open_comunicacion = ref(false);
         let open_aceptar = ref(false);
         let one_expediente = ref([]);
         const headers_sin_asignar=ref([]);
         const headers_asignados=ref([ 
-            { title: 'no. expediente', key: 'id', sort: true },
+            { title: 'no. expediente', key: 'id_ingreso_expediente', sort: true },
             { title: 'no. documento', key: 'num_wf_documento', sort: true },
             { title: 'año', key: 'num_wf_anio', sort: true },
             { title: 'tipo de expediente', key: 'tipo', sort: true },
             { title: 'fecha ingreso', key: 'fechaingreso', sort: true },
             { title: 'fecha asignacion', key: 'fechaasignacion', sort: true },
             { title: 'fecha aceptación', key: 'fechaaceptacion', sort: true },
-            { title: 'asignado', key: 'user_aplic', sort: true },
+            { title: 'asignado', key: 'usuarioasignacion', sort: true },
             { title: 'acciones', key: 'actions', sort: true },
         ]);
         const headers_finalizados=ref([ 
@@ -35,17 +36,20 @@ export const useexpedientesStore = defineStore('expedientes', () => {
             { title: 'año', key: 'num_wf_anio', sort: true },
             { title: 'tipo de expediente', key: 'tipo', sort: true },
             { title: 'fecha ingreso', key: 'fechaingreso', sort: true },
-            { title: 'fecha asignación', key: 'fecha_asignacion', sort: true },
-            { title: 'fecha finalización', key: 'fecha_finalizacion', sort: true },
-            { title: 'asignado', key: 'user_aplic', sort: true }
+            { title: 'fecha asignación', key: 'fechaasignacion', sort: true },
+            { title: 'fecha finalización', key: 'fechafinalizacion', sort: true },
+            { title: 'asignado', key: 'usuarioasignacion', sort: true }
         ]);
         let users= ref([]);
         let isWorkFlow= ref(true);
+        let llamada= ref(false);
         let theUser= ref('');
         let btn_asignar= ref(false);
         let btn_aceptar= ref(false);
         let btn_finalizar= ref(false);
         let btn_controlcalidad= ref(false);
+        let btn_comunicacion= ref(false);
+        let comentarios = ref('');
 
         async function getSinAsignar() {
             carga_sin_asignar.value = true;
@@ -168,6 +172,8 @@ export const useexpedientesStore = defineStore('expedientes', () => {
                 detalle.value = true;
             }else if(action == 5){
                 open_finalizar.value = true;
+            }else if(action == 6){
+                open_comunicacion.value = true;
             }
         };
         async function getUsers() {
@@ -311,6 +317,42 @@ export const useexpedientesStore = defineStore('expedientes', () => {
             })
             
         };
+        async function resgistrar_comunicacion(){
+            btn_comunicacion.value = true;
+            errors.value = [];
+            const globalstore = useGlobalStore();
+            let json = {
+                documento:one_expediente.value.documento,
+                anio:one_expediente.value.anio,
+                llamada: llamada.value,
+                correo: one_expediente.value.email,
+                telefono: one_expediente.value.telefono,
+                comentarios: comentarios.value,
+
+            };
+
+            const response = await axios.post('expedientes/registrar_comunicacion',json)
+            .then(response => {
+                if(!response.data.error){
+                    globalstore.setAlert(response.data,'success','Exito');
+                    setTimeout(() => {
+                        open_comunicacion.value = false;
+                        this.getAsignados();
+                    },500);
+
+                }else{
+                    
+                    errors.value = { error: [response.data.error] }
+                }
+            })
+            .catch(err => {
+                errors.value = err.response?.data?.errors
+            })
+            .finally(()=>{
+                btn_comunicacion.value = false;
+            })
+            
+        };
     return {
         carga_sin_asignar,
         carga_asignados,
@@ -323,6 +365,7 @@ export const useexpedientesStore = defineStore('expedientes', () => {
         open_finalizar,
         open_controlcalidad,
         open_aceptar,
+        open_comunicacion,
         one_expediente,
         headers_sin_asignar,
         headers_asignados,
@@ -333,7 +376,10 @@ export const useexpedientesStore = defineStore('expedientes', () => {
         btn_asignar,
         btn_aceptar,
         btn_finalizar,
+        btn_comunicacion,
         detalle,
+        llamada,
+        comentarios,
 
         getSinAsignar,
         getAsignados,
@@ -344,6 +390,7 @@ export const useexpedientesStore = defineStore('expedientes', () => {
         aceptar,
         finalizar,
         controlcalidad,
+        resgistrar_comunicacion,
         
     }
 });

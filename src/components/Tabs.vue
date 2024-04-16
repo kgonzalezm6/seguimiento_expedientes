@@ -1,22 +1,35 @@
 <script setup>
     import { useAuthStore } from '../stores/auth'
-    import { ref, shallowRef, markRaw } from 'vue'
+    import { ref, shallowRef, markRaw, watchEffect, onBeforeMount } from 'vue'
 
 
     
     const props = defineProps(['tabs'])
     const auth = useAuthStore()
     const arrayTabs = ref([])
-    
-    props.tabs.map(tab => {
+    const active = shallowRef(null);
+    const currentTab = shallowRef(0);
+const cargarTabs = async () => {
+    auth.tabsCargadas = false;
+    while (!auth.tabsCargadas) {
+        props.tabs.map(tab => {
         if(auth.checkPermission(tab.title)){
-            arrayTabs.value.push(markRaw(tab))
+            arrayTabs.value.push(markRaw(tab));
         }
     })
-    
-    const active = ref(arrayTabs.value[0].title)
-    const currentTab = shallowRef(arrayTabs.value[0].component)
+        if (arrayTabs.value.length > 0) {
+            auth.tabsCargadas = true;
+        } else {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+    }
+    const tituloPrimeraPestaña = await arrayTabs.value[0].title;
+    active.value = tituloPrimeraPestaña;
+    currentTab.value = arrayTabs.value[0].component;
+}
+    cargarTabs();
 
+    
 </script>
 
 <template>

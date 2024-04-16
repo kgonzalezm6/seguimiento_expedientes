@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="flex justify-center items-center">
+        <div class="flex justify-center items-center select-none">
             <!-- <div class="ml-2 group h-16 w-16 bg-blue-500 rounded-full overflow-hidden hover:bg-blue-800 hover:w-40 
                 hover:h-12 transition-all duration-300 grid justify-items-center relative">
                 <span class="-mt-20 group-hover:mt-3 text-white font-bold transition-all duration-300 group-hover:ml-6"> WORKFLOW</span>

@@ -14,7 +14,7 @@ onBeforeMount(() => {
             icon="clipboard-check" @close="expedienteStore.open_aceptar = !expedienteStore.open_aceptar" class="w-5/6">
                     <div class="flex items-center">
                         <icon icon="file-circle-check" class="text-9xl text-sky-500"/>
-                        <span class="text-3xl ml-6 font-semibold">¿Esta seguro de aceptar el expediente # {{expedienteStore.isWorkFlow ? expedienteStore.one_expediente.id : expedienteStore.one_expediente.num_expediente}} ?</span>
+                        <span class="text-3xl ml-6 font-semibold">¿Esta seguro de aceptar el expediente # {{expedienteStore.isWorkFlow ? expedienteStore.one_expediente.num_expediente : expedienteStore.one_expediente.id}} ?</span>
                     </div>
                     <validate-errors :errors="expedienteStore.errors" v-if="expedienteStore.errors != 0" />
             <template #footer>

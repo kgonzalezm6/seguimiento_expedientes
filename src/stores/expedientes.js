@@ -62,7 +62,6 @@ export const useexpedientesStore = defineStore('expedientes', () => {
                         { title: 'no. expediente', key: 'id', sort: true },
                         { title: 'no. documento', key: 'num_wf_documento', sort: true },
                         { title: 'año', key: 'num_wf_anio', sort: true },
-                        { title: 'tipo de expediente', key: 'tipo', sort: true },
                         { title: 'fecha ingreso', key: 'fechaingreso', sort: true },
                         { title: 'fecha traslado', key: 'fechatraslado', sort: true },
                         { title: 'acciones', key: 'actions', sort: true }

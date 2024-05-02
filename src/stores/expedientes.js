@@ -20,7 +20,6 @@ export const useexpedientesStore = defineStore('expedientes', () => {
         let one_expediente = ref([]);
         const headers_sin_asignar=ref([]);
         const headers_asignados=ref([ 
-            { title: 'no. expediente', key: 'id_ingreso_expediente', sort: true },
             { title: 'no. documento', key: 'num_wf_documento', sort: true },
             { title: 'año', key: 'num_wf_anio', sort: true },
             { title: 'tipo de expediente', key: 'tipo', sort: true },
@@ -50,6 +49,9 @@ export const useexpedientesStore = defineStore('expedientes', () => {
         let btn_controlcalidad= ref(false);
         let btn_comunicacion= ref(false);
         let comentarios = ref('');
+        let telefono_adicional = ref('');
+        let documento = ref(null);
+        let anio = ref(null);
 
         async function getSinAsignar() {
             carga_sin_asignar.value = true;
@@ -59,7 +61,6 @@ export const useexpedientesStore = defineStore('expedientes', () => {
             try {
                 if (isWorkFlow.value) {
                     headers_sin_asignar.value = [
-                        { title: 'no. expediente', key: 'id', sort: true },
                         { title: 'no. documento', key: 'num_wf_documento', sort: true },
                         { title: 'año', key: 'num_wf_anio', sort: true },
                         { title: 'fecha ingreso', key: 'fechaingreso', sort: true },
@@ -76,15 +77,23 @@ export const useexpedientesStore = defineStore('expedientes', () => {
 
                     carga_sin_asignar.value = false;
                 } else {
+                    
                     headers_sin_asignar.value = [
-                        { title: 'no. expediente', key: 'id_ingreso_expediente', sort: true },
                         { title: 'no. documento', key: 'num_iusicaso', sort: true },
                         { title: 'fecha ingreso', key: 'fecha', sort: true },
                         { title: 'acciones', key: 'actions', sort: true }
                     ];
                     const response = await axios.get('expedientes/sin-asignar-iusi');
                     if (!response.data.error) {
-                        datos_sin_asignar.value = response.data;
+                       
+                        if(documento.value && anio.value){
+                            datos_sin_asignar.value = response.data.filter(element => {
+                                return element.num_iusicaso === 'IUSI-Caso-'+documento.value + '-' + anio.value;      
+                            });
+                        }else{
+                            datos_sin_asignar.value = response.data;
+                        }
+                        console.log(datos_sin_asignar.value);
                     } else {
                         errors.value = { error: [response.data.error] };
                     }
@@ -103,7 +112,6 @@ export const useexpedientesStore = defineStore('expedientes', () => {
             };
             if(!isWorkFlow.value){
                 headers_asignados.value=[ 
-                    { title: 'no. expediente', key: 'id_ingreso_expediente', sort: true },
                     { title: 'no. documento', key: 'num_iusicaso', sort: true },
                     { title: 'fecha ingreso', key: 'fecha', sort: true },
                     { title: 'fecha asignacion', key: 'fechaasignacion', sort: true },
@@ -327,7 +335,7 @@ export const useexpedientesStore = defineStore('expedientes', () => {
                 correo: one_expediente.value.email,
                 telefono: one_expediente.value.telefono,
                 comentarios: comentarios.value,
-
+                telefono_adicional : telefono_adicional.value
             };
 
             const response = await axios.post('expedientes/registrar_comunicacion',json)
@@ -379,6 +387,9 @@ export const useexpedientesStore = defineStore('expedientes', () => {
         detalle,
         llamada,
         comentarios,
+        telefono_adicional,
+        documento,
+        anio,
 
         getSinAsignar,
         getAsignados,

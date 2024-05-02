@@ -8,6 +8,9 @@
                 </div>
                 <text-field title="telefono" option="label" v-model="store.one_expediente.telefono"/>
                 <div class="col-span-2">
+                  <text-field title="telefono adicional" option="label" v-model="store.telefono_adicional" class="w-full"/>
+                </div>
+                <div class="col-span-3">
                     <text-field title="correo electronico" option="label" class="w-full" v-model="store.one_expediente.email"/>
                 </div>
                 <div class="col-span-3 flex select-none">

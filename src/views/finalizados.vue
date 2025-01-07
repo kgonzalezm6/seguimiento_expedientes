@@ -11,16 +11,22 @@
                         <icon icon="clipboard-check" class="hover:scale-110 cursor-pointer mt-4 text-teal-500 text-2xl"
                             @click="expedienteStore.action(item, 2)" />
                     </tooltip>
+                    <tooltip message="Registro de comunicación">
+                        <icon icon="tty" class="hover:scale-110 cursor-pointer mt-4 text-sky-500 text-2xl"
+                            @click="expedienteStore.action(item, 6)" />
+                    </tooltip>
                 </div>
                 
             </template>
         </datatable>
+        <comunicacion />
     </div>
 </template>
 <script setup>
     import { onBeforeMount } from 'vue';
     import { useGlobalStore } from '../stores/global';
     import { useexpedientesStore } from '../stores/expedientes';
+    import comunicacion from '../components/expedientes/detallecomunicacion.vue';
     const expedienteStore = useexpedientesStore();
     const globalStore = useGlobalStore();
 

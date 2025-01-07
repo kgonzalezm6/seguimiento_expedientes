@@ -40,7 +40,7 @@ export const useexpedientesStore = defineStore('expedientes', () => {
             { title: 'asignado', key: 'usuarioasignacion', sort: true }
         ]);
         let users= ref([]);
-        let isWorkFlow= ref(true);
+        let isWorkFlow= ref(false);
         let llamada= ref(false);
         let theUser= ref('');
         let btn_asignar= ref(false);

@@ -1,22 +1,22 @@
 <template>
     <div>
-        <modal :open="store.open_comunicacion" title="Registrar comunicación"
+        <modal :open="store.open_comunicacion" title="Detalle comunicación"
             icon="pen-ruler" @close="store.open_comunicacion = !store.open_comunicacion" class="w-2/3">
             <div class="grid grid-cols-3 gap-2 select-none">
                 <div class="col-span-3">
                     <text-field title="No. Expediente" option="label" v-model="expedienteValue" class="w-full" disabled/>
                 </div>
-                <text-field title="telefono" option="label" v-model="store.one_expediente.telefono"/>
+                <text-field title="telefono" option="label" v-model="store.one_expediente.telefono" disabled/>
                 <div class="col-span-2">
-                  <text-field title="telefono adicional" option="label" v-model="store.telefono_adicional" class="w-full"/>
+                  <text-field title="telefono adicional" option="label" v-model="store.one_expediente.telefono_adicional" class="w-full" disabled/>
                 </div>
                 <div class="col-span-3">
-                    <text-field title="correo electronico" option="label" class="w-full" v-model="store.one_expediente.email"/>
+                    <text-field title="correo electronico" option="label" class="w-full" v-model="store.one_expediente.email" disabled/>
                 </div>
                 <div class="col-span-3 flex select-none">
                     <span class="mr-4"> Llamada:</span>
-                    <label class="switch" :class="{ 'checked': store.llamada }">
-                        <input type="checkbox" v-model="store.llamada">
+                    <label class="switch" :class="{ 'checked': store.one_expediente.llamada }">
+                        <input type="checkbox" v-model="store.one_expediente.llamada" disabled>
                         <span class="slider"></span>
                       </label>
                 </div>
@@ -26,7 +26,7 @@
                     duration-200 ease-linear placeholder:text-transparent focus:border-primary focus:pb-[0.625rem] 
                     focus:pt-[1.625rem] focus:text-neutral-700 focus:outline-none peer-focus:text-primary 
                     [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem] w-full"
-                    v-model="store.comentarios">
+                    v-model="store.one_expediente.comentarios" disabled>
 
                     </textarea>
                     <label
@@ -47,8 +47,6 @@
                 <div class="flex ml-auto">
                     <btn text="Cerrar" class="bg-red-500 text-white" icon="x" @click="store.open_comunicacion = false"
                      />
-                     <btn text="Guardar" class="bg-teal-500 text-white" icon="clipboard-check" @click="store.resgistrar_comunicacion()"
-                     :loading="store.btn_comunicacion"/>
                 </div>
             </template>
         </modal>

@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="flex mt-5 justify-center" v-if="!store.isWorkFlow">
-            <text-field option="label" title="no. documento" v-model="store.documento" class="h-10"/>
-            <text-field option="label" title="año" v-model="store.anio" class="h-10"/>
-            <btn class="bg-sky-muni text-white font-bold h-10" icon="magnifying-glass" @click="store.getSinAsignar()" />
+        <div class="flex mt-5 justify-center gap-2" v-if="!store.isWorkFlow">
+            <input type="text" class="h-12 bg-white shadow-lg pl-4 rounded-lg" placeholder="NO. DOCUMENTO" v-model="store.documento">
+            <input type="text" class="h-12 bg-white shadow-lg pl-4 rounded-lg" placeholder="AÑO" v-model="store.anio">
+            <btn class="bg-sky-muni text-white font-bold h-12" icon="magnifying-glass" @click="store.getSinAsignar()" />
         </div>
         <datatable :data="store.datos_sin_asignar" :headers="store.headers_sin_asignar" :loading="store.carga_sin_asignar">
             <template #actions="{ item }">

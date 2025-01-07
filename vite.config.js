@@ -11,5 +11,5 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  base : '/GestionServicios/apps/seguimiento-expedientes'
+  base : process.env.NODE_ENV === 'production' ? '/GestionServicios/apps/seguimiento-expedientes':''
 })
